@@ -1,0 +1,100 @@
+Pasos para configurar un router Cisco 2911 y DHCPpool: 
+
+1. Identificar las interfaces
+2. Encender las interfaces
+3. Asginar el ip a la interface del router
+4. no shut
+
+Accesos Enable o Modo Privilegiado
+# en, ena o enable
+
+Acceso Configuración
+# conf t o configure terminal
+
+Colocar nombre al equipo
+
+*********
+HOSTNAME
+*********
+
+# hostname nombredelrouter
+# conf t   (dentro del equipo)
+# (conf t) hostname nombredelrouter
+# exit
+R1# wr o copy running-config startup-config o write memory o desde "config" usar do write (ENTER)
+# configuracion guardada
+
+Paso	Comando	Descripción
+1	enable					Entrar al modo privilegiado.
+2	configure terminal			Entrar al modo de configuración global.
+3	hostname <nombre>			Asignar el nombre deseado al router.
+4	copy running-config startup-config	Guardar la configuración en la memoria de inicio (NVRAM).
+
+**********
+CONTRASEÑA
+**********
+
+Router> enable
+Router# configure terminal
+Router(config)# enable secret 123456789
+
+**************************************************
+ASIGNAR IP A LA INTERFACE GIG0/0 ROUTER PARA LAN
+**************************************************
+
+1. Router> enable
+2. Router# configure terminal
+Router(config)#
+3. Router(config)# interface GigabitEthernet0/0
+Router(config-if)#
+4. Router(config-if)# ip address 192.168.1.1 255.255.255.0
+5. Router(config-if)# no shut o no shutdown
+
+Resumen de comandos
+Paso	Comando					Descripción
+1	enable					Entrar a modo privilegiado
+2	configure terminal			Entrar a modo configuración global
+3	interface GigabitEthernet0/0		Seleccionar la interfaz a configurar
+4	ip address 192.168.1.1 255.255.255.0	Asignar IP y máscara
+5	no shutdown				Activar la interfaz
+6	end o exit				Salir del modo configuración
+7	copy running-config startup-config	Guardar configuración
+
+**********************
+VER LAS INTERFACES
+**********************
+Router# show ip interface brief
+
+***************************
+CONFIGURAR DHCP AL ROUTER
+***************************
+
+Router(config)# ip dhcp pool LAN
+Router(dhcp-config)# network 192.168.1.0 255.255.255.0
+Router(dhcp-config)# default-router 192.168.1.1
+Router(dhcp-config)# dns-server 8.8.8.8
+Router(dhcp-config)# exit
+Router# wr
+
+*************************************************
+CONFIGURAR DHCP POOL (debe asignar desde el 100)
+*************************************************
+
+Router#  		
+Router> enable
+Router# configure terminal
+Router(config)# ip dhcp excluded-address 192.168.1.1 192.168.1.99
+
+********************
+COMPLETO
+********************
+
+Router> enable
+Router# configure terminal
+Router(config)# ip dhcp pool LAN
+Router(dhcp-config)# network 192.168.1.0 255.255.255.0
+Router(dhcp-config)# default-router 192.168.1.1
+Router(dhcp-config)# dns-server 8.8.8.8 8.8.4.4
+Router(dhcp-config)# exit
+Router(config)# exit
+Router# copy running-config startup-config
