@@ -5,6 +5,13 @@ Pasos para configurar un router Cisco 2911 y DHCPpool:
 3. Asginar el ip a la interface del router
 4. no shut
 
+****************
+CORREGIR ORTOGRAFÍA EN PKT "evita que packet tracer se quede esperando a volver al prompt
+****************
+Router> enable
+Router# configure terminal
+Router(config)# no ip domain-lookup
+
 Accesos Enable o Modo Privilegiado
 # en, ena o enable
 
